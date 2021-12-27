@@ -14,7 +14,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableSwagger2
-@EnableGlobalMethodSecurity(prePostEnabled = false, securedEnabled = false)
+@EnableGlobalMethodSecurity(prePostEnabled = tru, securedEnabled = true)
 public class SpringFoxConfig implements WebMvcConfigurer {
    @Bean
    public Docket api() {
