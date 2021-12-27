@@ -29,9 +29,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     @Autowired
     private  JwtTokenProvider jwtTokenProvider;
 
-    private static final String ADMIN_ENDPOINT = "https://task-management-serivce.herokuapp.com/api/v1/admin/**";
-    private static final String LOGIN_ENDPOINT = "https://task-management-serivce.herokuapp.com/api/v1/auth/**";
-    private static final String TASK_ENDPOINT = "https://task-management-serivce.herokuapp.com/api/v1/tasks/**";
+    private static final String ADMIN_ENDPOINT = "**/api/v1/admin/**";
+    private static final String LOGIN_ENDPOINT = "**/api/v1/auth/**";
+    private static final String TASK_ENDPOINT = "**/api/v1/tasks/**";
        private static final String[] AUTH_WHITELIST = {
             // -- Swagger UI v2
             "/v2/api-docs",
@@ -84,7 +84,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     }
       @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**");
+        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**,/api/**");
 
     }
 
