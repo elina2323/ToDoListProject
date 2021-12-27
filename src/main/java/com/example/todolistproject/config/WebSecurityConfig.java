@@ -67,21 +67,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
         return authProvider;
     }
     
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .httpBasic().disable()
-                .csrf().and().cors().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(HttpMethod.POST, LOGIN_ENDPOINT).permitAll()
-                .antMatchers(ADMIN_ENDPOINT).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .apply(new JwtConfigurer(jwtTokenProvider));
-    }
+//     @Override
+//     protected void configure(HttpSecurity http) throws Exception {
+//         http
+//                 .httpBasic().disable()
+//                 .csrf().and().cors().disable()
+//                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                 .and()
+//                 .authorizeRequests()
+//                 .antMatchers(AUTH_WHITELIST).permitAll()
+//                 .antMatchers(HttpMethod.POST, LOGIN_ENDPOINT).permitAll()
+//                 .antMatchers(ADMIN_ENDPOINT).permitAll()
+//                 .anyRequest().authenticated()
+//                 .and()
+//                 .apply(new JwtConfigurer(jwtTokenProvider));
+//     }
       @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**,/api/**");
@@ -89,10 +89,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     }
 
    
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception{
-//        http.cors().and().csrf().disable();
-//    }
+   @Override
+   protected void configure(HttpSecurity http) throws Exception{
+       http.cors().and().csrf().disable();
+   }
 //     @Bean
 //    CorsConfigurationSource corsConfigurationSource() {
 //        CorsConfiguration configuration = new CorsConfiguration();
