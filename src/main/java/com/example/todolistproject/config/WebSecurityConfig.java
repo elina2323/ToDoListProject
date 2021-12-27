@@ -19,7 +19,11 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
+import org.springframework.context.annotation.Configuration;
 
+
+@Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements ApplicationContextAware,WebMvcConfigurer {
 
@@ -29,6 +33,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/**";
     private static final String TASK_ENDPOINT = "/api/v1/tasks/**";
+       private static final String[] AUTH_WHITELIST = {
+            // -- Swagger UI v2
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html/",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+            // other public endpoints of your API may be appended to this array
+    };
 
 
     
@@ -49,7 +67,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
         authProvider.setPasswordEncoder(new BCryptPasswordEncoder());
         return authProvider;
     }
-
+    
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -58,30 +76,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-//                .antMatchers("/v2/api-docs", "/swagger-resources/configuration/ui", "/swagger-resources",
-//                        "/swagger-resources/configuration/security", "/swagger-ui.html", "/webjars/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
-//                .antMatchers(HttpMethod.GET, "/api/v1/admin/users/**").hasAuthority("ADMIN")
-//                .antMatchers(HttpMethod.GET, "/api/v1/users/get-by-name").hasAnyAuthority("ADMIN", "USER")
-//                .antMatchers("/tasks/**").hasAnyAuthority("ADMIN", "USER")
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers(HttpMethod.POST, LOGIN_ENDPOINT).permitAll()
+                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
     }
-    
+      @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**");
+
+    }
+
+   
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception{
 //        http.cors().and().csrf().disable();
 //    }
-//     @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("*"));
-//        configuration.setAllowedMethods(Arrays.asList("*"));
-//        configuration.setAllowedHeaders(Arrays.asList("*"));
-//        configuration.setAllowCredentials(true);
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
+    @Bean
+   CorsConfigurationSource corsConfigurationSource() {
+       CorsConfiguration configuration = new CorsConfiguration();
+       configuration.setAllowedOrigins(Arrays.asList("*"));
+       configuration.setAllowedMethods(Arrays.asList("*"));
+       configuration.setAllowedHeaders(Arrays.asList("*"));
+       configuration.setAllowCredentials(true);
+       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+       source.registerCorsConfiguration("/**", configuration);
+       return source;
+   }
 }
