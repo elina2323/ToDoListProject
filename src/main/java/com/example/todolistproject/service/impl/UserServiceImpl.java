@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
     public UserDto saveUser(UserDto userDto) {
 
         User user = UserMapper.INSTANCE.mapToUser(userDto);
-        Role roleUser = roleRepo.findByName("ROLE_USER");
+        Role roleUser = roleRepo.findByName("USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
         userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));

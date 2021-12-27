@@ -43,7 +43,7 @@ public class AuthenticationRestController {
         this.userService = userService;
     }
 
-    @PostMapping("/sign_up")
+    @PostMapping("sign_up")
     public ResponseEntity<?> saveUser(@RequestBody UserDto userDto) {
 
         log.info("IN AuthenticationRestController saveUser - user {} successfully saved", userDto);

@@ -32,10 +32,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
 
 
     
-     @Override
-    public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedMethods("*");
-    }
+//     @Override
+//    public void addCorsMappings(CorsRegistry registry) {
+//        registry.addMapping("/**").allowedMethods("*");
+//    }
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
         return authProvider;
     }
 
-    /*@Override
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
@@ -58,31 +58,32 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/v2/api-docs", "/swagger-resources/configuration/ui", "/swagger-resources",
-                        "/swagger-resources/configuration/security", "/swagger-ui.html", "/webjars/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/admin/users/**").hasAuthority("ADMIN")
-                .antMatchers(HttpMethod.GET, "/users/get-by-name").hasAnyAuthority("ADMIN", "USER")
-                .antMatchers("/tasks/**").hasAnyAuthority("ADMIN", "USER")
+//                .antMatchers("/v2/api-docs", "/swagger-resources/configuration/ui", "/swagger-resources",
+//                        "/swagger-resources/configuration/security", "/swagger-ui.html", "/webjars/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/auth/**").permitAll()
+//                .antMatchers(HttpMethod.GET, "/api/v1/admin/users/**").hasAuthority("ADMIN")
+//                .antMatchers(HttpMethod.GET, "/api/v1/users/get-by-name").hasAnyAuthority("ADMIN", "USER")
+//                .antMatchers("/tasks/**").hasAnyAuthority("ADMIN", "USER")
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
-    }*/
+    }
     
-    @Override
-    protected void configure(HttpSecurity http) throws Exception{
-        http.cors().and().csrf().disable();
-    }
-     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("*"));
-        configuration.setAllowedMethods(Arrays.asList("*"));
-        configuration.setAllowedHeaders(Arrays.asList("*"));
-        configuration.setAllowCredentials(true);
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration);
-        return source;
-    }
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception{
+//        http.cors().and().csrf().disable();
+//    }
+//     @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("*"));
+//        configuration.setAllowedMethods(Arrays.asList("*"));
+//        configuration.setAllowedHeaders(Arrays.asList("*"));
+//        configuration.setAllowCredentials(true);
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
     
 
 }
