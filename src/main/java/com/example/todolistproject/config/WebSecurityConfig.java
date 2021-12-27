@@ -13,9 +13,15 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import java.util.Arrays;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements ApplicationContextAware {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements ApplicationContextAware,WebMvcConfigurer {
 
     @Autowired
     private  JwtTokenProvider jwtTokenProvider;
@@ -25,6 +31,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     private static final String TASK_ENDPOINT = "/api/v1/tasks/**";
 
 
+    
+     @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedMethods("*");
+    }
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -39,12 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
         return authProvider;
     }
 
-    @Override
+    /*@Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
-                .csrf().disable()
-                .cors().disable()
+                .csrf().and().cors().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
@@ -56,6 +66,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
+    }*/
+    
+    @Override
+    protected void configure(HttpSecurity http) throws Exception{
+        http.cors().and().csrf().disable();
     }
+     @Bean
+    CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("*"));
+        configuration.setAllowedMethods(Arrays.asList("*"));
+        configuration.setAllowedHeaders(Arrays.asList("*"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
+    }
+    
 
 }
