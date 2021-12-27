@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
         return authProvider;
     }
 
-    @Override
+    /*@Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
@@ -66,6 +66,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
+    }*/
+    
+    @Override
+    protected void configure(HttpSecurity http) throws Exception{
+        http.cors().and().csrf().disable();
     }
      @Bean
     CorsConfigurationSource corsConfigurationSource() {
