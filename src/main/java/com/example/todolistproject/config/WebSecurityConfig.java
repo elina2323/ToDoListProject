@@ -60,7 +60,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .authorizeRequests()
 //                .antMatchers("/v2/api-docs", "/swagger-resources/configuration/ui", "/swagger-resources",
 //                        "/swagger-resources/configuration/security", "/swagger-ui.html", "/webjars/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/v1/auth/sign_up").permitAll()
 //                .antMatchers(HttpMethod.GET, "/api/v1/admin/users/**").hasAuthority("ADMIN")
 //                .antMatchers(HttpMethod.GET, "/api/v1/users/get-by-name").hasAnyAuthority("ADMIN", "USER")
 //                .antMatchers("/tasks/**").hasAnyAuthority("ADMIN", "USER")
