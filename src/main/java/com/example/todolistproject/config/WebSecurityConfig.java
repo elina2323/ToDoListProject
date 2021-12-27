@@ -17,10 +17,11 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import java.util.Arrays;
-
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements ApplicationContextAware {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements ApplicationContextAware,WebMvcConfigurer {
 
     @Autowired
     private  JwtTokenProvider jwtTokenProvider;
@@ -30,6 +31,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     private static final String TASK_ENDPOINT = "/api/v1/tasks/**";
 
 
+    
+     @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**").allowedMethods("*");
+    }
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
