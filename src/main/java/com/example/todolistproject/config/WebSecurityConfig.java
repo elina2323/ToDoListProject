@@ -78,7 +78,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers(HttpMethod.POST, LOGIN_ENDPOINT).permitAll()
-                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+                .antMatchers(ADMIN_ENDPOINT).permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
@@ -94,15 +94,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
 //    protected void configure(HttpSecurity http) throws Exception{
 //        http.cors().and().csrf().disable();
 //    }
-    @Bean
-   CorsConfigurationSource corsConfigurationSource() {
-       CorsConfiguration configuration = new CorsConfiguration();
-       configuration.setAllowedOrigins(Arrays.asList("*"));
-       configuration.setAllowedMethods(Arrays.asList("*"));
-       configuration.setAllowedHeaders(Arrays.asList("*"));
-       configuration.setAllowCredentials(true);
-       UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-       source.registerCorsConfiguration("/**", configuration);
-       return source;
-   }
+//     @Bean
+//    CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration configuration = new CorsConfiguration();
+//        configuration.setAllowedOrigins(Arrays.asList("*"));
+//        configuration.setAllowedMethods(Arrays.asList("*"));
+//        configuration.setAllowedHeaders(Arrays.asList("*"));
+//        configuration.setAllowCredentials(true);
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", configuration);
+//        return source;
+//    }
 }
