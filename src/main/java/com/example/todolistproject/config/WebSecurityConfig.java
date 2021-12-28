@@ -99,8 +99,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
 //     }
      @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.
-                sessionManagement()
+        http
+                .httpBasic().disable()
+                .csrf().and().cors().disable()
+                .sessionManagement()
                 .and().authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
