@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     private  JwtTokenProvider jwtTokenProvider;
 
     private static final String ADMIN_ENDPOINT = "**/api/v1/admin/**";
-    private static final String LOGIN_ENDPOINT = "**/api/v1/auth/**";
+    private static final String LOGIN_ENDPOINT = "**/api/v1/auth/login";
     private static final String TASK_ENDPOINT = "**/api/v1/tasks/**";
        private static final String[] AUTH_WHITELIST = {
             // -- Swagger UI v2
@@ -105,7 +105,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .and().authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
-                .antMatchers(TASK_ENDPOINT).permitAll()
+                .antMatchers(TASK_ENDPOINT).authenticated()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
