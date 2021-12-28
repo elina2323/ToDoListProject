@@ -99,10 +99,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(TASK_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and()
+                .anyRequest().authenticated();
+                //.and()
                 //.apply(new JwtConfigurer(jwtTokenProvider));
-                .formLogin();
+                //.formLogin();
     }
 
 }
