@@ -49,10 +49,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
             // other public endpoints of your API may be appended to this array
     };
 
-//     @Override
-//    public void addCorsMappings(CorsRegistry registry) {
-//        registry.addMapping("/**").allowedMethods("*");
-//    }
+
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -107,44 +104,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .and().authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
-                .antMatchers(TASK_ENDPOINT).permitAll()
+                .antMatchers(TASK_ENDPOINT).authenticated()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN").anyRequest().authenticated().and().formLogin();
 
     }
 
    
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception{
-//        http.cors().and().csrf().disable();
-//    }
-//     @Bean
-//    CorsConfigurationSource corsConfigurationSource() {
-//        CorsConfiguration configuration = new CorsConfiguration();
-//        configuration.setAllowedOrigins(Arrays.asList("*"));
-//        configuration.setAllowedMethods(Arrays.asList("*"));
-//        configuration.setAllowedHeaders(Arrays.asList("*"));
-//        configuration.setAllowCredentials(true);
-//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-//        source.registerCorsConfiguration("/**", configuration);
-//        return source;
-//    }
 
-//    @Bean(name="configure")
-//    @Conditional(DevConditional.class)
-//    public SecurityWebFilterChain configureDev(ServerHttpSecurity http) throws Exception {
-//        return http
-//                .csrf().disable()
-//                .authorizeExchange()
-//                .pathMatchers("/v2/api-docs").permitAll()
-//                .pathMatchers("/configuration/ui").permitAll()
-//                .pathMatchers("/swagger-resources/**").permitAll()
-//                .pathMatchers("/configuration/security").permitAll()
-//                .pathMatchers("/swagger-ui.html").permitAll()
-//                .pathMatchers("/swagger-ui/*").permitAll()
-//                .pathMatchers("/webjars/**").permitAll()
-//                .pathMatchers("/v2/**").permitAll()
-//                .and().cors()
-//                .and().oauth2ResourceServer()
-//                .jwt().and().and().build();
-//    }
 }
