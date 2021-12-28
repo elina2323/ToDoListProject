@@ -55,14 +55,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-//     @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        auth.inMemoryAuthentication()
-//                .withUser("admin")
-//                .password(passwordEncoder.encode("admin2323"))
-//                .roles("ADMIN", "SWAGGER");
-//    }
+     @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        auth.inMemoryAuthentication()
+                .withUser("admin")
+                .password(passwordEncoder.encode("admin2323"))
+                .roles("ADMIN", "SWAGGER");
+    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
@@ -93,7 +93,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
         http
                 .httpBasic().disable()
                 .csrf().and().cors().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionManagement()
                 .and().authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
@@ -101,9 +101,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .apply(new JwtConfigurer(jwtTokenProvider));
-                //.formLogin();
-
+                //.apply(new JwtConfigurer(jwtTokenProvider));
+                .formLogin();
     }
 
 }
