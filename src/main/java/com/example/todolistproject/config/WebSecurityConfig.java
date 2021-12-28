@@ -73,8 +73,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                    ).permitAll()
                    .antMatchers(LOGIN_ENDPOINT).authenticated()
                    .antMatchers(SIGN_UP_ENDPOINT).permitAll()
-                   .antMatchers(SIGN_UP_ENDPOINT).permitAll()
-                   .antMatchers(TASK_ENDPOINT).hasAnyAuthority("ADMIN", "USER")
+                   .antMatchers(ADMIN_ENDPOINT).hasAuthority("ADMIN")
+                   //.antMatchers(TASK_ENDPOINT).hasAnyAuthority("ADMIN", "USER")
                    .anyRequest().authenticated()
                    .and()
                    .apply(new JwtConfigurer(jwtTokenProvider));
@@ -118,16 +118,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
 //                 .and()
 //                 .apply(new JwtConfigurer(jwtTokenProvider));
 //     }
-//       @Override
-//     public void configure(WebSecurity web) throws Exception {
-//         web.ignoring().antMatchers("/v2/api-docs",
-//                 "/configuration/ui",
-//                 "/swagger-resources/**",
-//                 "/configuration/**",
-//                 "/swagger-ui.html",
-//                 "/webjars/**,/api/**");
-//
-//     }
+
 //     @Override
 //    protected void configure(HttpSecurity http) throws Exception {
 //        http
