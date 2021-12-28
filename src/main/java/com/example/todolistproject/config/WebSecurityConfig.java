@@ -32,7 +32,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     private  JwtTokenProvider jwtTokenProvider;
 
     private static final String ADMIN_ENDPOINT = "**/api/v1/admin/**";
-    private static final String LOGIN_ENDPOINT = "**/api/v1/auth/**";
+    private static final String LOGIN_ENDPOINT = "**/api/v1/auth/login";
+    private static final String SIGN_UP_ENDPOINT = "**/api/v1/auth/sing_up";
     private static final String TASK_ENDPOINT = "**/api/v1/tasks/**";
        private static final String[] AUTH_WHITELIST = {
             // -- Swagger UI v2
@@ -49,20 +50,50 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
             // other public endpoints of your API may be appended to this array
     };
 
+       @Override
+   public void configure(WebSecurity web) throws Exception {
+           getHttp()
+                   .httpBasic().disable()
+                   .csrf().and().cors().disable()
+                   .exceptionHandling()
+                   //.authenticationEntryPoint(unauthorizedHandler)
+                   //.accessDeniedHandler(accessDeniedHandler)
+                   .and()
+                   .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                   .and()
+                   .authorizeRequests()
+                   .antMatchers(ADMIN_ENDPOINT).hasAuthority("ADMIN")
+                   .antMatchers(
+                           HttpMethod.GET,
+                           "/v2/api-docs",
+                           "/swagger-resources/**",
+                           "/swagger-ui.html**",
+                           "/webjars/**",
+                           "favicon.ico"
+                   ).permitAll()
+                   .antMatchers(LOGIN_ENDPOINT).authenticated()
+                   .antMatchers(SIGN_UP_ENDPOINT).permitAll()
+                   .antMatchers(SIGN_UP_ENDPOINT).permitAll()
+                   .antMatchers(TASK_ENDPOINT).hasAnyAuthority("ADMIN", "USER")
+                   .anyRequest().authenticated()
+                   .and()
+                   .apply(new JwtConfigurer(jwtTokenProvider));
+       }
+
 
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password(passwordEncoder.encode("admin2323"))
-                .roles("ADMIN", "SWAGGER");
-    }
+//     @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        auth.inMemoryAuthentication()
+//                .withUser("admin")
+//                .password(passwordEncoder.encode("admin2323"))
+//                .roles("ADMIN", "SWAGGER");
+//    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
@@ -95,22 +126,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
 //                 "/configuration/**",
 //                 "/swagger-ui.html",
 //                 "/webjars/**,/api/**");
-
+//
 //     }
-     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .httpBasic().disable()
-                .csrf().and().cors().disable()
-                .sessionManagement()
-                .and().authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(LOGIN_ENDPOINT).permitAll()
-                .antMatchers(TASK_ENDPOINT).authenticated()
-                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN").anyRequest().authenticated().and().formLogin();
-
-    }
-
-   
+//     @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//                .httpBasic().disable()
+//                .csrf().and().cors().disable()
+//                .sessionManagement()
+//                .and().authorizeRequests()
+//                .antMatchers(AUTH_WHITELIST).permitAll()
+//                .antMatchers(LOGIN_ENDPOINT).permitAll()
+//                .antMatchers(TASK_ENDPOINT).authenticated()
+//                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN").anyRequest().authenticated().and().formLogin();
+//
+//    }
 
 }
