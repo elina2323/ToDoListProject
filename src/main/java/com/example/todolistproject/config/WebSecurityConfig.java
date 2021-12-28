@@ -47,8 +47,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
             // other public endpoints of your API may be appended to this array
     };
 
-
-    
 //     @Override
 //    public void addCorsMappings(CorsRegistry registry) {
 //        registry.addMapping("/**").allowedMethods("*");
@@ -84,7 +82,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
 //     }
       @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**,/api/**");
+        web.ignoring().antMatchers("/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/**",
+                "/swagger-ui.html",
+                "/webjars/**,/api/**");
 
     }
 
@@ -103,5 +106,24 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
 //        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
 //        source.registerCorsConfiguration("/**", configuration);
 //        return source;
+//    }
+
+//    @Bean(name="configure")
+//    @Conditional(DevConditional.class)
+//    public SecurityWebFilterChain configureDev(ServerHttpSecurity http) throws Exception {
+//        return http
+//                .csrf().disable()
+//                .authorizeExchange()
+//                .pathMatchers("/v2/api-docs").permitAll()
+//                .pathMatchers("/configuration/ui").permitAll()
+//                .pathMatchers("/swagger-resources/**").permitAll()
+//                .pathMatchers("/configuration/security").permitAll()
+//                .pathMatchers("/swagger-ui.html").permitAll()
+//                .pathMatchers("/swagger-ui/*").permitAll()
+//                .pathMatchers("/webjars/**").permitAll()
+//                .pathMatchers("/v2/**").permitAll()
+//                .and().cors()
+//                .and().oauth2ResourceServer()
+//                .jwt().and().and().build();
 //    }
 }

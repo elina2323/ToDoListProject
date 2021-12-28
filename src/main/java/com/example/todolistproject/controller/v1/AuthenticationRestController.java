@@ -4,6 +4,8 @@ import com.example.todolistproject.security.jwt.JwtTokenProvider;
 import com.example.todolistproject.model.dto.AuthenticationRequestDto;
 import com.example.todolistproject.model.dto.UserDto;
 import com.example.todolistproject.service.UserService;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,6 +54,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("login")
+    @ApiOperation(value = "", authorizations = { @Authorization(value="jwtToken") })
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
