@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedMethods("*")
-                .allowedOrigins("https://task-management-serivce.herokuapp.com/swagger-ui.html#")
+                .allowedOrigins("*")
                 .allowedHeaders("*");
     }
 
