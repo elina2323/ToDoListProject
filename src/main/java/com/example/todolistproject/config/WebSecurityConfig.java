@@ -56,6 +56,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+     @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        auth.inMemoryAuthentication()
+                .withUser("admin")
+                .password(passwordEncoder.encode("admin2323"))
+                .roles("ADMIN", "SWAGGER");
+    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
@@ -80,22 +88,33 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
 //                 .and()
 //                 .apply(new JwtConfigurer(jwtTokenProvider));
 //     }
-      @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/v2/api-docs",
-                "/configuration/ui",
-                "/swagger-resources/**",
-                "/configuration/**",
-                "/swagger-ui.html",
-                "/webjars/**,/api/**");
+//       @Override
+//     public void configure(WebSecurity web) throws Exception {
+//         web.ignoring().antMatchers("/v2/api-docs",
+//                 "/configuration/ui",
+//                 "/swagger-resources/**",
+//                 "/configuration/**",
+//                 "/swagger-ui.html",
+//                 "/webjars/**,/api/**");
+
+//     }
+     @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.
+                sessionManagement()
+                .and().authorizeRequests()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers(TASK_ENDPOINT).permitAll()
+                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN").anyRequest().authenticated().and().formLogin();
 
     }
 
    
-   @Override
-   protected void configure(HttpSecurity http) throws Exception{
-       http.cors().and().csrf().disable();
-   }
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception{
+//        http.cors().and().csrf().disable();
+//    }
 //     @Bean
 //    CorsConfigurationSource corsConfigurationSource() {
 //        CorsConfiguration configuration = new CorsConfiguration();
