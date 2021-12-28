@@ -27,23 +27,23 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                .select()
                .apis(RequestHandlerSelectors.any())
                .paths(PathSelectors.any())
-               .build();
-//               .apiInfo(apiInfo())
-//               .securitySchemes(Arrays.asList(apiKey()));
+               .build()
+               .apiInfo(apiInfo())
+               .securitySchemes(Arrays.asList(apiKey()));
    }
 
-//     private ApiInfo apiInfo() {
-//         return new ApiInfoBuilder()
-//                 .title("Sig-Predict REST API Document")
-//                 .description("work in progress")
-//                 .termsOfServiceUrl("localhost")
-//                 .version("1.0")
-//                 .build();
-//     }
-//
-//     private ApiKey apiKey() {
-//         return new ApiKey("jwtToken", "Authorization", "header");
-//     }
+     private ApiInfo apiInfo() {
+         return new ApiInfoBuilder()
+                 .title("Sig-Predict REST API Document")
+                 .description("work in progress")
+                 .termsOfServiceUrl("localhost")
+                 .version("1.0")
+                 .build();
+     }
+
+     private ApiKey apiKey() {
+         return new ApiKey("jwtToken", "Authorization", "header");
+     }
 
    @Override
    public void addResourceHandlers(ResourceHandlerRegistry registry) {

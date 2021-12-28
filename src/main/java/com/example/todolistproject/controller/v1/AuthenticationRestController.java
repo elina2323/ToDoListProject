@@ -54,7 +54,7 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("login")
-//    @ApiOperation(value = "", authorizations = { @Authorization(value="jwtToken") })
+    @ApiOperation(value = "", authorizations = { @Authorization(value="jwtToken") })
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
