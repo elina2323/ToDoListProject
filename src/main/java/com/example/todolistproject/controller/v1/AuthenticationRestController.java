@@ -34,14 +34,14 @@ public class AuthenticationRestController {
 
     private final AuthenticationManager authenticationManager;
 
-    //private final JwtTokenProvider jwtTokenProvider;
+    private final JwtTokenProvider jwtTokenProvider;
 
     private final UserService userService;
 
     @Autowired
-    public AuthenticationRestController(AuthenticationManager authenticationManager, /*JwtTokenProvider jwtTokenProvider,*/ UserService userService) {
+    public AuthenticationRestController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
         this.authenticationManager = authenticationManager;
-        //this.jwtTokenProvider = jwtTokenProvider;
+        this.jwtTokenProvider = jwtTokenProvider;
         this.userService = userService;
     }
 
@@ -56,34 +56,27 @@ public class AuthenticationRestController {
     @PostMapping("login")
 //    @ApiOperation(value = "", authorizations = { @Authorization(value="jwtToken") })
     public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
+        try {
+            String username = requestDto.getUsername();
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
+            UserDto userDto = userService.findByAuthorName(username);
 
-        String username = requestDto.getUsername();
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
-        UserDto userDto = userService.findByAuthorName(username);
-        return ResponseEntity.ok(userDto);
+            if (userDto == null) {
+                throw new UsernameNotFoundException("User with username: " + username + " not found");
+            }
 
+            String token = jwtTokenProvider.createToken(username, userDto.getRoles());
+
+            Map<Object, Object> response = new HashMap<>();
+            response.put("username", username);
+            response.put("token", token);
+
+
+            log.info("IN AuthenticationRestController login - user {} successfully logged", requestDto);
+
+            return ResponseEntity.ok(response);
+        } catch (AuthenticationException e) {
+            throw new BadCredentialsException("Invalid username or password");
+        }
     }
-//        try {
-//            String username = requestDto.getUsername();
-//            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
-//            UserDto userDto = userService.findByAuthorName(username);
-//
-//            if (userDto == null) {
-//                throw new UsernameNotFoundException("User with username: " + username + " not found");
-//            }
-//
-//            String token = jwtTokenProvider.createToken(username, userDto.getRoles());
-//
-//            Map<Object, Object> response = new HashMap<>();
-//            response.put("username", username);
-//            response.put("token", token);
-//
-//
-//            log.info("IN AuthenticationRestController login - user {} successfully logged", requestDto);
-//
-//            return ResponseEntity.ok(response);
-//        } catch (AuthenticationException e) {
-//            throw new BadCredentialsException("Invalid username or password");
-//        }
-//    }
 }

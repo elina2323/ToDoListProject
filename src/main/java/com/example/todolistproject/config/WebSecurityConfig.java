@@ -49,6 +49,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
             // other public endpoints of your API may be appended to this array
     };
 
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/**")
+                .allowedMethods("*")
+                .allowedOrigins("https://task-management-serivce.herokuapp.com/swagger-ui.html#")
+                .allowedHeaders("*");
+    }
+
 
     @Bean
     @Override
@@ -99,10 +107,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(TASK_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-                .anyRequest().authenticated();
-                //.and()
+                .anyRequest().authenticated()
+                .and()
                 //.apply(new JwtConfigurer(jwtTokenProvider));
-                //.formLogin();
+                .formLogin();
     }
 
 }
