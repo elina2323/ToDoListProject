@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin
 public class NurController {
 
-    @PostMapping("")
+    @GetMapping("")
     public String index() {
         return "Являетесь ли вы клиентом М-Банк?";
     }
