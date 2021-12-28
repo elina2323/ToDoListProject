@@ -26,29 +26,27 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                .select()
                .apis(RequestHandlerSelectors.any())
                .paths(PathSelectors.any())
-               .build()
-               .apiInfo(apiInfo())
-               .securitySchemes(Arrays.asList(apiKey()));
+               .build();
    }
 
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Sig-Predict REST API Document")
-                .description("work in progress")
-                .termsOfServiceUrl("localhost")
-                .version("1.0")
-                .build();
-    }
+//     private ApiInfo apiInfo() {
+//         return new ApiInfoBuilder()
+//                 .title("Sig-Predict REST API Document")
+//                 .description("work in progress")
+//                 .termsOfServiceUrl("localhost")
+//                 .version("1.0")
+//                 .build();
+//     }
 
-    private ApiKey apiKey() {
-        return new ApiKey("jwtToken", "Authorization", "header");
-    }
+//     private ApiKey apiKey() {
+//         return new ApiKey("jwtToken", "Authorization", "header");
+//     }
 
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("swagger-ui.html")
-//                .addResourceLocations("classpath:/META-INF/resources/");
-//        registry.addResourceHandler("/webjars/**")
-//                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-//    }
+   @Override
+   public void addResourceHandlers(ResourceHandlerRegistry registry) {
+       registry.addResourceHandler("swagger-ui.html")
+               .addResourceLocations("classpath:/META-INF/resources/");
+       registry.addResourceHandler("/webjars/**")
+               .addResourceLocations("classpath:/META-INF/resources/webjars/");
+   }
 }
