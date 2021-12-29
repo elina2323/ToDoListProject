@@ -120,4 +120,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
          // disable page caching
          http.headers().cacheControl();
     }
+     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**");
+
+    }
+    
 }
