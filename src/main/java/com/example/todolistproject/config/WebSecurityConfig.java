@@ -106,7 +106,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .authorizeRequests()
 //                .antMatchers(AUTH_WHITELIST).permitAll()
 //                .antMatchers(LOGIN_ENDPOINT).permitAll()
-                .antMatchers("/").permitAll()
+                .antMatchers("/api/v1/**").permitAll()
 //                .antMatchers(TASK_ENDPOINT).permitAll()
 //                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                  .anyRequest().authenticated()
