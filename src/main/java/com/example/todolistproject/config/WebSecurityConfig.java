@@ -63,14 +63,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        auth.inMemoryAuthentication()
-                .withUser("admin")
-                .password(passwordEncoder.encode("admin2323"))
-                .roles("ADMIN", "SWAGGER");
-    }
+//     @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+//        auth.inMemoryAuthentication()
+//                .withUser("admin")
+//                .password(passwordEncoder.encode("admin2323"))
+//                .roles("ADMIN", "SWAGGER");
+//    }
 
     @Bean
     public DaoAuthenticationProvider daoAuthenticationProvider() {
@@ -109,9 +109,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(TASK_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-                .anyRequest().authenticated();
-//                .and()
-//                .apply(new JwtConfigurer(jwtTokenProvider));
+                .anyRequest().authenticated()
+                .and()
+                .apply(new JwtConfigurer(jwtTokenProvider));
 //                .formLogin();
 
          // disable page caching
