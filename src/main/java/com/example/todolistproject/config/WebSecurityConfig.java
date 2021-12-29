@@ -110,13 +110,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                  .anyRequest().authenticated()
                 .and()
-//                //.apply(new JwtConfigurer(jwtTokenProvider));
+                //.apply(new JwtConfigurer(jwtTokenProvider));
                 .formLogin();
-
-         // Custom JWT based security filter
-//         http
-//                 .addFilterBefore(authenticationTokenFilter,
-//                         UsernamePasswordAuthenticationFilter.class);
 
          // disable page caching
 //         http.headers().cacheControl();
