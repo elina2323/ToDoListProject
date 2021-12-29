@@ -101,17 +101,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
         http
                 .httpBasic().disable()
                 .csrf().and().cors().disable()
-                .sessionManagement()
-                .and().authorizeRequests()
+//                .sessionManagement()
+//                .and()
+                .authorizeRequests()
 //                .antMatchers(AUTH_WHITELIST).permitAll()
 //                .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers("/").permitAll()
 //                .antMatchers(TASK_ENDPOINT).permitAll()
-                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+//                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                  .anyRequest().authenticated()
                 .and()
                 //.apply(new JwtConfigurer(jwtTokenProvider));
-                .formLogin();
+                .formLogin().disable();
 
          // disable page caching
 //         http.headers().cacheControl();
