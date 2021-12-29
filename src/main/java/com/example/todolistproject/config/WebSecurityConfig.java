@@ -13,6 +13,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -32,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     private  JwtTokenProvider jwtTokenProvider;
 
     private static final String ADMIN_ENDPOINT = "**/api/v1/admin/**";
-    private static final String LOGIN_ENDPOINT = "**/api/v1/auth/login";
+    //private static final String LOGIN_ENDPOINT = "**/api/v1/auth/login";
     private static final String TASK_ENDPOINT = "**/api/v1/tasks/**";
        private static final String[] AUTH_WHITELIST = {
             // -- Swagger UI v2
@@ -106,13 +107,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers("**/api/v1/auth/login", "**/api/v1/auth/sign_up").permitAll()
                 .antMatchers(TASK_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                //.apply(new JwtConfigurer(jwtTokenProvider));
-                .formLogin();
+                .apply(new JwtConfigurer(jwtTokenProvider));
+                //.formLogin();
+
+         // Custom JWT based security filter
+//         http
+//                 .addFilterBefore(authenticationTokenFilter,
+//                         UsernamePasswordAuthenticationFilter.class);
+
+         // disable page caching
+         http.headers().cacheControl();
     }
+
+
 
 }
