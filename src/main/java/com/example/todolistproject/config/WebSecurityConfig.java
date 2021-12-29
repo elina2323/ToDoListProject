@@ -68,7 +68,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         auth.inMemoryAuthentication()
                 .withUser("admin")
-                .password(passwordEncoder.encode("admin2323"))
+                .password(passwordEncoder.encode("admin323"))
                 .roles("ADMIN", "SWAGGER");
     }
 
@@ -118,7 +118,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
 //                         UsernamePasswordAuthenticationFilter.class);
 
          // disable page caching
-         http.headers().cacheControl();
+//         http.headers().cacheControl();
     }
 
 }
