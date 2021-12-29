@@ -101,7 +101,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
         http
                 .httpBasic().disable()
                 .csrf().and().cors().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
+                .sessionManagement()
                 .and().authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
