@@ -99,15 +99,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
      @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .httpBasic().disable()
+                .httpBasic()
+                .and()
                 .csrf().and().cors().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
 //                .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(LOGIN_ENDPOINT).permitAll()
-                .antMatchers(TASK_ENDPOINT).permitAll()
-                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+//                .antMatchers(LOGIN_ENDPOINT).permitAll()
+//                .antMatchers(TASK_ENDPOINT).permitAll()
+//                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 //.apply(new JwtConfigurer(jwtTokenProvider));
