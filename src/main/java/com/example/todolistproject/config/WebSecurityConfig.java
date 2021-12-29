@@ -100,7 +100,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
-                .csrf().and().cors().disable()
+                .csrf().and().cors().disable();
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
@@ -118,7 +118,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
 //                         UsernamePasswordAuthenticationFilter.class);
 
          // disable page caching
-         http.headers().cacheControl();
+        // http.headers().cacheControl();
     }
      @Override
     public void configure(WebSecurity web) throws Exception {
