@@ -101,10 +101,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
-                .csrf().disable()
-                .cors()
-                .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .csrf().and().cors().disable()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and().authorizeRequests()
                 .antMatchers(AUTH_WHITELIST).permitAll()
                 .antMatchers("**/api/v1/auth/login", "**/api/v1/auth/sign_up").permitAll()
