@@ -103,15 +103,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .csrf().and().cors().disable()
                 .sessionManagement()
                 .and().authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(LOGIN_ENDPOINT).permitAll()
-                .antMatchers("/").permitAll();
+//                .antMatchers(AUTH_WHITELIST).permitAll()
+//                .antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers("/").permitAll()
 //                .antMatchers(TASK_ENDPOINT).permitAll()
-//                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-//                .anyRequest().authenticated()
-//                .and()
+                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+                 .anyRequest().authenticated()
+                .and()
 //                //.apply(new JwtConfigurer(jwtTokenProvider));
-//                .formLogin();
+                .formLogin();
 
          // Custom JWT based security filter
 //         http
