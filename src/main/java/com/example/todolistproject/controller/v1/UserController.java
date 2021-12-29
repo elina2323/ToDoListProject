@@ -20,7 +20,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("users/get-by-name")
+    @GetMapping("get-by-name")
     public ResponseEntity<?> findByUserName(String username) {
 
         log.info("IN AdminRestController findByUserName - user {} successfully found", username);

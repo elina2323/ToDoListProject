@@ -34,7 +34,7 @@ public class AdminRestController {
 
         log.info("IN AdminRestController getUserById - user {} successfully found", id);
 
-        return new ResponseEntity<>(userService.findById(id), HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping("users/get")
