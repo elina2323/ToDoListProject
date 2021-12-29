@@ -100,14 +100,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
-                .csrf().and().cors().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(LOGIN_ENDPOINT).permitAll()
-                .antMatchers(TASK_ENDPOINT).permitAll()
-                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-                .anyRequest().authenticated();
+                .csrf().and().cors().disable();
+//                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+//                 .and().authorizeRequests()
+//                 .antMatchers(AUTH_WHITELIST).permitAll()
+//                 .antMatchers(LOGIN_ENDPOINT).permitAll()
+//                 .antMatchers(TASK_ENDPOINT).permitAll()
+//                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
+//                 .anyRequest().authenticated();
                 //.and()
                 //.apply(new JwtConfigurer(jwtTokenProvider));
                // .formLogin();
