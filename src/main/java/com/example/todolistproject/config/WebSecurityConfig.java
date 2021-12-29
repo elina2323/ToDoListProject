@@ -33,22 +33,22 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     private  JwtTokenProvider jwtTokenProvider;
 
     private static final String ADMIN_ENDPOINT = "**/api/v1/admin/**";
-    //private static final String LOGIN_ENDPOINT = "**/api/v1/auth/login";
+    private static final String LOGIN_ENDPOINT = "**/api/v1/auth/login";
     private static final String TASK_ENDPOINT = "**/api/v1/tasks/**";
-//       private static final String[] AUTH_WHITELIST = {
-//            // -- Swagger UI v2
-//            "/v2/api-docs",
-//            "/swagger-resources",
-//            "/swagger-resources/**",
-//            "/configuration/ui",
-//            "/configuration/security",
-//            "/swagger-ui.html/",
-//            "/webjars/**",
-//            // -- Swagger UI v3 (OpenAPI)
-//            "/v3/api-docs/**",
-//            "/swagger-ui/**"
-//            // other public endpoints of your API may be appended to this array
-//    };
+       private static final String[] AUTH_WHITELIST = {
+            // -- Swagger UI v2
+            "/v2/api-docs",
+            "/swagger-resources",
+            "/swagger-resources/**",
+            "/configuration/ui",
+            "/configuration/security",
+            "/swagger-ui.html/",
+            "/webjars/**",
+            // -- Swagger UI v3 (OpenAPI)
+            "/v3/api-docs/**",
+            "/swagger-ui/**"
+            // other public endpoints of your API may be appended to this array
+    };
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
@@ -57,7 +57,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .allowedOrigins("*")
                 .allowedHeaders("*");
     }
-
 
     @Bean
     @Override
@@ -70,7 +69,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
         auth.inMemoryAuthentication()
                 .withUser("admin")
                 .password(passwordEncoder.encode("admin2323"))
-                .roles("ADMIN" /*"SWAGGER"*/);
+                .roles("ADMIN", "SWAGGER");
     }
 
     @Bean
@@ -104,8 +103,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
                 .csrf().and().cors().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and().authorizeRequests()
-                //.antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers("**/api/v1/auth/login", "**/api/v1/auth/sign_up").permitAll()
+                .antMatchers(AUTH_WHITELIST).permitAll()
+                .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(TASK_ENDPOINT).permitAll()
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()
