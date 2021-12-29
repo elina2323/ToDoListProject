@@ -100,7 +100,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
-                .csrf().and().cors().disable()
+                //.csrf().and().cors().disable()
                 .sessionManagement()
                 .and().authorizeRequests()
                 //.antMatchers(AUTH_WHITELIST).permitAll()
