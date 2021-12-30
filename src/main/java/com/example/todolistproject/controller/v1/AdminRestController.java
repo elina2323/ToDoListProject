@@ -45,13 +45,13 @@ public class AdminRestController {
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.FOUND);
     }
 
-    @GetMapping("users/get-by-name")
-    public ResponseEntity<?> findByUserName(String username) {
-
-        log.info("IN AdminRestController findByUserName - user {} successfully found", username);
-
-        return new ResponseEntity<>(userService.findByAuthorName(username), HttpStatus.FOUND);
-    }
+//    @GetMapping("users/get-by-name")
+//    public ResponseEntity<?> findByUserName(String username) {
+//
+//        log.info("IN AdminRestController findByUserName - user {} successfully found", username);
+//
+//        return new ResponseEntity<>(userService.findByAuthorName(username), HttpStatus.FOUND);
+//    }
 
     @GetMapping(value = "users/delete{id}")
     public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id){
