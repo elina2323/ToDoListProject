@@ -16,7 +16,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/v1/admin/")
 //@CrossOrigin
-@RolesAllowed("ADMIN")
 public class AdminRestController {
 
     private final Logger log = LoggerFactory.getLogger(UserController.class);
