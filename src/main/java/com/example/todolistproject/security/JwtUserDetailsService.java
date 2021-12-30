@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
+// SS understands objects from its environment, UserDetailsService is an auxiliary class
 public class JwtUserDetailsService implements UserDetailsService {
 
     private final Logger log = LoggerFactory.getLogger(JwtUserDetailsService.class);
@@ -25,6 +26,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     }
 
     @Override
+    // takes user from DB by login, converts and return jwtUser
     public UserDetails loadUserByUsername(String authorName) throws UsernameNotFoundException {
         UserDto userDto = userService.findByAuthorName(authorName);
 

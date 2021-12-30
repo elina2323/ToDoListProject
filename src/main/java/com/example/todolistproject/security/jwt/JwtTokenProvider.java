@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Date;
@@ -50,26 +52,32 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("roles", getRoleNames(roles));
 
-        Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMilliseconds);
+//        Date now = new Date();
+//        Date validity = new Date(now.getTime() + validityInMilliseconds);
 
+        Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());
+
+        // creation of token
         return Jwts.builder()//
                 .setClaims(claims)//
-                .setIssuedAt(now)//
-                .setExpiration(validity)//
+                //.setIssuedAt(now)//
+                .setExpiration(date)//
                 .signWith(SignatureAlgorithm.HS256, secret)//
                 .compact();
     }
 
+    // to be checked on access rights
     public Authentication getAuthentication(String token) {
         UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUsername(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
+    // info about user's login, while generating token it saved in Subject, if it validated it contains login
     public String getUsername(String token) {
         return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
     }
 
+    // takes login from token, finds user in DB
     public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer_")) {

@@ -27,7 +27,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/v1/auth/")
-@CrossOrigin
+//@CrossOrigin
 public class AuthenticationRestController {
 
     private final Logger log = LoggerFactory.getLogger(UserController.class);
@@ -55,7 +55,7 @@ public class AuthenticationRestController {
 
     @PostMapping("login")
 //    @ApiOperation(value = "", authorizations = { @Authorization(value="jwtToken") })
-    public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
+    public ResponseEntity<?> login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));

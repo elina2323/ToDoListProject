@@ -15,6 +15,7 @@ public class JwtUser implements UserDetails {
     private final String password;
     private final LocalDateTime created;
     private final LocalDateTime updated;
+    // interface for user's accesses
     private final Collection<? extends GrantedAuthority> authorities;
 
     public JwtUser(Long id,

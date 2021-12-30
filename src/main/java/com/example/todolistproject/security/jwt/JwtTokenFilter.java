@@ -20,11 +20,14 @@ public class JwtTokenFilter extends GenericFilterBean {
     }
 
     @Override
+    // if user found by login it has to be sent to context SS
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain filterChain)
             throws IOException, ServletException {
 
+        // takes login from token, finds user in DB
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
         if (token != null && jwtTokenProvider.validateToken(token)) {
+            //to be checked on access rights
             Authentication auth = jwtTokenProvider.getAuthentication(token);
 
             if (auth != null) {
