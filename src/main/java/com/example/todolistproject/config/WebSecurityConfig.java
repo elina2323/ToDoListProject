@@ -32,9 +32,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements A
     @Autowired
     private  JwtTokenProvider jwtTokenProvider;
 
-    private static final String ADMIN_ENDPOINT = "**/api/v1/admin/**";
-    private static final String LOGIN_ENDPOINT = "**/api/v1/auth/**";
-    private static final String TASK_ENDPOINT = "**/api/v1/tasks/**";
+    private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
+    private static final String LOGIN_ENDPOINT = "/api/v1/auth/**";
+    private static final String TASK_ENDPOINT = "/api/v1/tasks/**";
        private static final String[] AUTH_WHITELIST = {
             // -- Swagger UI v2
             "/v2/api-docs",
