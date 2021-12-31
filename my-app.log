@@ -1,0 +1,33 @@
+2021-12-31 06:49:14,519 INFO [main] c.e.t.ToDoLIstProjectApplication [StartupInfoLogger.java:55] Starting ToDoLIstProjectApplication on Computer with PID 9772 (D:\IdeaProjects\ToDoListProject\target\classes started by Elina in D:\IdeaProjects\ToDoListProject)
+2021-12-31 06:49:14,519 INFO [main] c.e.t.ToDoLIstProjectApplication [SpringApplication.java:651] No active profile set, falling back to default profiles: default
+2021-12-31 06:49:15,159 INFO [main] o.s.d.r.c.RepositoryConfigurationDelegate [RepositoryConfigurationDelegate.java:127] Bootstrapping Spring Data JPA repositories in DEFERRED mode.
+2021-12-31 06:49:15,222 INFO [main] o.s.d.r.c.RepositoryConfigurationDelegate [RepositoryConfigurationDelegate.java:187] Finished Spring Data repository scanning in 60ms. Found 4 JPA repository interfaces.
+2021-12-31 06:49:15,456 INFO [main] o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker [PostProcessorRegistrationDelegate.java:335] Bean 'org.springframework.ws.config.annotation.DelegatingWsConfiguration' of type [org.springframework.ws.config.annotation.DelegatingWsConfiguration$$EnhancerBySpringCGLIB$$fc5cf3be] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2021-12-31 06:49:15,487 INFO [main] o.s.w.s.a.s.AnnotationActionEndpointMapping [AbstractAddressingEndpointMapping.java:236] Supporting [WS-Addressing August 2004, WS-Addressing 1.0]
+2021-12-31 06:49:15,753 INFO [main] o.s.b.w.e.t.TomcatWebServer [TomcatWebServer.java:108] Tomcat initialized with port(s): 8080 (http)
+2021-12-31 06:49:15,769 INFO [main] o.a.c.h.Http11NioProtocol [DirectJDKLog.java:173] Initializing ProtocolHandler ["http-nio-8080"]
+2021-12-31 06:49:15,769 INFO [main] o.a.c.c.StandardService [DirectJDKLog.java:173] Starting service [Tomcat]
+2021-12-31 06:49:15,769 INFO [main] o.a.c.c.StandardEngine [DirectJDKLog.java:173] Starting Servlet engine: [Apache Tomcat/9.0.35]
+2021-12-31 06:49:15,847 INFO [main] o.a.c.c.C.[.[.[/] [DirectJDKLog.java:173] Initializing Spring embedded WebApplicationContext
+2021-12-31 06:49:15,847 INFO [main] o.s.w.c.ContextLoader [ServletWebServerApplicationContext.java:284] Root WebApplicationContext: initialization completed in 1282 ms
+2021-12-31 06:49:15,956 WARN [main] o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration [JpaBaseConfiguration.java:220] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-12-31 06:49:16,019 INFO [main] o.s.s.c.ThreadPoolTaskExecutor [ExecutorConfigurationSupport.java:181] Initializing ExecutorService 'applicationTaskExecutor'
+2021-12-31 06:49:16,066 INFO [task-1] o.h.j.i.u.LogHelper [LogHelper.java:31] HHH000204: Processing PersistenceUnitInfo [name: default]
+2021-12-31 06:49:16,113 INFO [task-1] o.h.Version [Version.java:44] HHH000412: Hibernate ORM core version 5.4.15.Final
+2021-12-31 06:49:16,253 INFO [task-1] o.h.a.c.Version [JavaReflectionManager.java:49] HCANN000001: Hibernate Commons Annotations {5.1.0.Final}
+2021-12-31 06:49:16,316 INFO [task-1] c.z.h.HikariDataSource [HikariDataSource.java:110] HikariPool-1 - Starting...
+2021-12-31 06:49:16,331 INFO [main] o.s.s.w.DefaultSecurityFilterChain [DefaultSecurityFilterChain.java:43] Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@58b311ba, org.springframework.security.web.context.SecurityContextPersistenceFilter@26457986, org.springframework.security.web.header.HeaderWriterFilter@5eed6dfb, org.springframework.web.filter.CorsFilter@2f79f192, org.springframework.security.web.authentication.logout.LogoutFilter@7f0f84d4, com.example.todolistproject.security.jwt.JwtTokenFilter@482c351d, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2faa55bb, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@74ba6ff5, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@75eaba95, org.springframework.security.web.session.SessionManagementFilter@646cd766, org.springframework.security.web.access.ExceptionTranslationFilter@69ed5ea2, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@58f254b1]
+2021-12-31 06:49:17,879 INFO [task-1] c.z.h.HikariDataSource [HikariDataSource.java:123] HikariPool-1 - Start completed.
+2021-12-31 06:49:17,910 INFO [task-1] o.h.d.Dialect [Dialect.java:172] HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2021-12-31 06:49:21,801 INFO [task-1] o.h.e.t.j.p.i.JtaPlatformInitiator [JtaPlatformInitiator.java:52] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2021-12-31 06:49:21,816 INFO [task-1] o.s.o.j.LocalContainerEntityManagerFactoryBean [AbstractEntityManagerFactoryBean.java:416] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2021-12-31 06:49:22,176 INFO [main] o.a.c.h.Http11NioProtocol [DirectJDKLog.java:173] Starting ProtocolHandler ["http-nio-8080"]
+2021-12-31 06:49:22,207 INFO [main] o.s.b.w.e.t.TomcatWebServer [TomcatWebServer.java:220] Tomcat started on port(s): 8080 (http) with context path ''
+2021-12-31 06:49:22,207 INFO [main] o.s.d.r.c.DeferredRepositoryInitializationListener [DeferredRepositoryInitializationListener.java:49] Triggering deferred initialization of Spring Data repositories…
+2021-12-31 06:49:22,348 INFO [main] o.s.d.r.c.DeferredRepositoryInitializationListener [DeferredRepositoryInitializationListener.java:53] Spring Data repositories initialized!
+2021-12-31 06:49:22,348 INFO [main] c.e.t.ToDoLIstProjectApplication [StartupInfoLogger.java:61] Started ToDoLIstProjectApplication in 8.371 seconds (JVM running for 12.551)
+2021-12-31 08:56:23,654 WARN [HikariPool-1 housekeeper] c.z.h.p.HikariPool [HikariPool.java:787] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=25m34s878ms336µs166ns).
+2021-12-31 09:20:53,386 INFO [SpringContextShutdownHook] o.s.o.j.LocalContainerEntityManagerFactoryBean [AbstractEntityManagerFactoryBean.java:598] Closing JPA EntityManagerFactory for persistence unit 'default'
+2021-12-31 09:20:53,417 INFO [SpringContextShutdownHook] o.s.s.c.ThreadPoolTaskExecutor [ExecutorConfigurationSupport.java:218] Shutting down ExecutorService 'applicationTaskExecutor'
+2021-12-31 09:20:53,417 INFO [SpringContextShutdownHook] c.z.h.HikariDataSource [HikariDataSource.java:350] HikariPool-1 - Shutdown initiated...
+2021-12-31 09:20:54,965 INFO [SpringContextShutdownHook] c.z.h.HikariDataSource [HikariDataSource.java:352] HikariPool-1 - Shutdown completed.

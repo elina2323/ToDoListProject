@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,26 +47,26 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("sign_up")
-    public ResponseEntity<?> saveUser(@RequestBody User user) {
+    public ResponseEntity<?> saveUser(@Valid @RequestBody UserDto userDto) {
 
-        log.info("IN AuthenticationRestController saveUser - user {} successfully saved", user);
+        log.info("IN AuthenticationRestController saveUser - user {} successfully saved", userDto);
 
-        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.saveUser(userDto), HttpStatus.CREATED);
     }
 
     @PostMapping("login")
 //    @ApiOperation(value = "", authorizations = { @Authorization(value="jwtToken") })
-    public ResponseEntity<?> login(@RequestBody AuthenticationRequestDto requestDto) {
+    public ResponseEntity<?> login(@Valid @RequestBody AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
-            User user = userService.findByAuthorName(username);
+            UserDto userDto = userService.findByAuthorName(username);
 
-            if (user == null) {
+            if (userDto == null) {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");
             }
 
-            String token = jwtTokenProvider.createToken(username, user.getRoles());
+            String token = jwtTokenProvider.createToken(username, userDto.getRoles());
 
             Map<Object, Object> response = new HashMap<>();
             response.put("username", username);

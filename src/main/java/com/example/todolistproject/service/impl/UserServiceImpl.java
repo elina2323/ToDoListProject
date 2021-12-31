@@ -31,9 +31,9 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public User saveUser(User user) {
+    public UserDto saveUser(UserDto userDto) {
 
-        //User user = UserMapper.INSTANCE.mapToUser(user);
+        User user = UserHistoryMapper.INSTANCE.toUser(userDto);
         Role roleUser = roleRepo.findByName("USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
@@ -43,17 +43,17 @@ public class UserServiceImpl implements UserService {
 
         log.info("IN UserServiceImpl saveUser - user {} successfully saved", user);
 
-        return user;
+        return UserHistoryMapper.INSTANCE.toUserDto(user);
     }
 
     @Override
-    public User findByAuthorName(String authorName) {
+    public UserDto findByAuthorName(String authorName) {
 
         User user = userRepo.findByAuthorName(authorName);
 
         log.info("IN UserServiceImpl findByAuthorName - user: {} found by authorName: {}", user, authorName);
 
-        return user;
+        return UserHistoryMapper.INSTANCE.toUserDto(user);
     }
 
     @Override
