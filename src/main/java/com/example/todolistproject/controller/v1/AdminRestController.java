@@ -1,7 +1,7 @@
 package com.example.todolistproject.controller.v1;
 
 import com.example.todolistproject.model.dto.UserDto;
-import com.example.todolistproject.model.entity.Role;
+import com.example.todolistproject.model.entity.User;
 import com.example.todolistproject.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +10,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.security.RolesAllowed;
 import java.util.List;
 
 @RestController

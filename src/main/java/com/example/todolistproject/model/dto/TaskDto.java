@@ -11,16 +11,9 @@ import javax.validation.constraints.NotBlank;
 public class TaskDto {
 
     Long id;
-
-    @NotBlank
     String taskName;
-
-    @NotBlank
     String description;
-
     Status status;
-
-    @NotBlank
     String userName;
 
     public TaskDto() {

@@ -5,6 +5,7 @@ import com.example.todolistproject.exception.ResourceNotFoundException;
 import com.example.todolistproject.mapper.TaskMapper;
 import com.example.todolistproject.model.dto.StatusHistoryDto;
 import com.example.todolistproject.model.dto.TaskDto;
+import com.example.todolistproject.model.entity.StatusHistory;
 import com.example.todolistproject.model.entity.Task;
 import com.example.todolistproject.model.enums.Status;
 import com.example.todolistproject.service.StatusHistoryService;
@@ -39,9 +40,9 @@ public class TaskServiceImpl implements TaskService {
         StatusHistoryDto statusHistoryDto = new StatusHistoryDto();
         statusHistoryDto.setTask(new TaskDto(task.getId()));
         statusHistoryDto.setStatus(Status.NEW);
-        statusHistoryService.save(statusHistoryDto);
+        statusHistoryService.saveStatusHistory(statusHistoryDto);
 
-        log.info("IN TaskServiceImpl saveTask - task {} successfully saved", taskDto);
+        log.info("IN TaskServiceImpl saveTask - task {} successfully saved", task);
 
         return TaskMapper.INSTANCE.mapToTaskDto(task);
     }
@@ -49,7 +50,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public TaskDto updateTask(TaskDto taskDto) throws ResourceNotFoundException{
 
-        Task task = TaskMapper.INSTANCE.mapToTask(taskDto);
+        Task task= TaskMapper.INSTANCE.mapToTask(taskDto);
 
         taskRepo.findById(taskDto.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("No task record exists for given id : "));
@@ -98,11 +99,11 @@ public class TaskServiceImpl implements TaskService {
         task.setStatus(status);
         StatusHistoryDto statusHistoryDto = statusHistoryService.getLastStatus(taskId);
         statusHistoryDto.setEndDate(LocalDateTime.now());
-        statusHistoryService.save(statusHistoryDto);
+        statusHistoryService.saveStatusHistory(statusHistoryDto);
         StatusHistoryDto actualStatusHistory = new StatusHistoryDto();
         actualStatusHistory.setTask(new TaskDto(taskId));
         actualStatusHistory.setStatus(status);
-        statusHistoryService.save(actualStatusHistory);
+        statusHistoryService.saveStatusHistory(actualStatusHistory);
 
         log.info("IN TaskServiceImpl changeTaskStatus - task status {} {} successfully changed", taskId, status);
 

@@ -1,7 +1,7 @@
 package com.example.todolistproject.security.jwt;
 
-import com.example.todolistproject.model.dto.UserDto;
 import com.example.todolistproject.model.entity.Role;
+import com.example.todolistproject.model.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -14,15 +14,15 @@ public final class JwtUserFactory {
     public JwtUserFactory() {
     }
 
-    public static JwtUser create(UserDto userDto) {
+    public static JwtUser create(User user) {
         return new JwtUser(
-                userDto.getId(),
-                userDto.getAuthorName(),
-                userDto.getLogin(),
-                userDto.getPassword(),
-                userDto.getCreated(),
-                userDto.getUpdated(),
-                mapToGrantedAuthorities(new ArrayList<>(userDto.getRoles()))
+                user.getId(),
+                user.getAuthorName(),
+                user.getLogin(),
+                user.getPassword(),
+                user.getCreated(),
+                user.getUpdated(),
+                mapToGrantedAuthorities(new ArrayList<>(user.getRoles()))
         );
     }
 

@@ -32,7 +32,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 // Spring Security Setting Class
 @EnableWebSecurity
-public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements ApplicationContextAware,WebMvcConfigurer {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements WebMvcConfigurer {
 
     @Autowired
     private  JwtTokenProvider jwtTokenProvider;

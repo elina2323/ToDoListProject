@@ -28,12 +28,12 @@ public class StatusHistoryServiceImpl implements StatusHistoryService {
     }
 
     @Override
-    public StatusHistoryDto save(StatusHistoryDto statusHistoryDto) {
-        StatusHistory statusHistory = StatusHistoryMapper.INSTANCE.mapToStatusHistory(statusHistoryDto);
+    public void saveStatusHistory(StatusHistoryDto statusHistoryDto) {
+        StatusHistory statusHistory= StatusHistoryMapper.INSTANCE.mapToStatusHistory(statusHistoryDto);
         statusHistory = statusHistoryRepo.saveAndFlush(statusHistory);
 
         log.info("IN StatusHistoryServiceImpl save - status history {} successfully saved", statusHistoryDto);
 
-        return StatusHistoryMapper.INSTANCE.mapToStatusHistoryDto(statusHistory);
+        StatusHistoryMapper.INSTANCE.mapToStatusHistoryDto(statusHistory);
     }
 }

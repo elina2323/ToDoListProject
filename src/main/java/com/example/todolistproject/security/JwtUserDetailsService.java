@@ -1,8 +1,10 @@
 package com.example.todolistproject.security;
 
+import com.example.todolistproject.dao.UserRepo;
+import com.example.todolistproject.model.dto.UserDto;
+import com.example.todolistproject.model.entity.User;
 import com.example.todolistproject.security.jwt.JwtUser;
 import com.example.todolistproject.security.jwt.JwtUserFactory;
-import com.example.todolistproject.model.dto.UserDto;
 import com.example.todolistproject.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,23 +20,22 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     private final Logger log = LoggerFactory.getLogger(JwtUserDetailsService.class);
 
-    private final UserService userService;
+    private final UserRepo userRepo;
 
-    @Autowired
-    public JwtUserDetailsService(UserService userService) {
-        this.userService = userService;
+    public JwtUserDetailsService(UserRepo userRepo) {
+        this.userRepo = userRepo;
     }
 
     @Override
     // takes user from DB by login, converts and return jwtUser
     public UserDetails loadUserByUsername(String authorName) throws UsernameNotFoundException {
-        UserDto userDto = userService.findByAuthorName(authorName);
+        User user = userRepo.findByAuthorName(authorName);
 
-        if (userDto == null) {
+        if (user == null) {
             throw new UsernameNotFoundException("User with authorName: " + authorName + " not found");
         }
 
-        JwtUser jwtUser = JwtUserFactory.create(userDto);
+        JwtUser jwtUser = JwtUserFactory.create(user);
 
         log.info("IN JwtUserDetailsServiceImpl loadUserByUsername - user with authorName: {} successfully loaded", authorName);
 

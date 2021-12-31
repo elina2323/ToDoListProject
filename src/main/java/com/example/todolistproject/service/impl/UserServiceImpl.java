@@ -2,7 +2,7 @@ package com.example.todolistproject.service.impl;
 
 import com.example.todolistproject.dao.RoleRepo;
 import com.example.todolistproject.dao.UserRepo;
-import com.example.todolistproject.mapper.UserMapper;
+import com.example.todolistproject.mapper.UserHistoryMapper;
 import com.example.todolistproject.model.dto.UserDto;
 import com.example.todolistproject.model.entity.Role;
 import com.example.todolistproject.model.entity.User;
@@ -31,29 +31,29 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public UserDto saveUser(UserDto userDto) {
+    public User saveUser(User user) {
 
-        User user = UserMapper.INSTANCE.mapToUser(userDto);
+        //User user = UserMapper.INSTANCE.mapToUser(user);
         Role roleUser = roleRepo.findByName("USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
-        userDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
-        userDto.setRoles(userRoles);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setRoles(userRoles);
         userRepo.save(user);
 
-        log.info("IN UserServiceImpl saveUser - user {} successfully saved", userDto);
+        log.info("IN UserServiceImpl saveUser - user {} successfully saved", user);
 
-        return UserMapper.INSTANCE.mapToUserDto(user);
+        return user;
     }
 
     @Override
-    public UserDto findByAuthorName(String authorName) {
+    public User findByAuthorName(String authorName) {
 
         User user = userRepo.findByAuthorName(authorName);
 
         log.info("IN UserServiceImpl findByAuthorName - user: {} found by authorName: {}", user, authorName);
 
-        return UserMapper.INSTANCE.mapToUserDto(user);
+        return user;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService {
 
         log.info("IN UserServiceImpl getAllUsers - {} users found", userList.size());
 
-        return UserMapper.INSTANCE.mapToUserDtoList(userList);
+        return UserHistoryMapper.INSTANCE.toUserDtoList(userList);
     }
 
     @Override
@@ -78,7 +78,7 @@ public class UserServiceImpl implements UserService {
 
         log.info("IN UserServiceImpl findById - user: {} found by id: {}", user, id);
 
-        return UserMapper.INSTANCE.mapToUserDto(user);
+        return UserHistoryMapper.INSTANCE.toUserDto(user);
     }
 
     @Override

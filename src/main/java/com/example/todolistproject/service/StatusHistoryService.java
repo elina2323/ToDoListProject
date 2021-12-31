@@ -6,5 +6,5 @@ public interface StatusHistoryService {
 
     StatusHistoryDto getLastStatus(Long taskId);
 
-    StatusHistoryDto save(StatusHistoryDto statusHistoryDto);
+    void saveStatusHistory(StatusHistoryDto statusHistoryDto);
 }

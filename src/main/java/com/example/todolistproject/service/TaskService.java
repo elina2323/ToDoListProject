@@ -1,6 +1,7 @@
 package com.example.todolistproject.service;
 
 import com.example.todolistproject.model.dto.TaskDto;
+import com.example.todolistproject.model.entity.Task;
 import com.example.todolistproject.model.enums.Status;
 import org.springframework.http.ResponseEntity;
 

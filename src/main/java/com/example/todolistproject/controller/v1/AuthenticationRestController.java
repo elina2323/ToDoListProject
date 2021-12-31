@@ -1,8 +1,9 @@
 package com.example.todolistproject.controller.v1;
 
+import com.example.todolistproject.model.dto.UserDto;
+import com.example.todolistproject.model.entity.User;
 import com.example.todolistproject.security.jwt.JwtTokenProvider;
 import com.example.todolistproject.model.dto.AuthenticationRequestDto;
-import com.example.todolistproject.model.dto.UserDto;
 import com.example.todolistproject.service.UserService;
 //import io.swagger.annotations.ApiOperation;
 //import io.swagger.annotations.Authorization;
@@ -20,7 +21,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,11 +46,11 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("sign_up")
-    public ResponseEntity<?> saveUser(@RequestBody UserDto userDto) {
+    public ResponseEntity<?> saveUser(@RequestBody User user) {
 
-        log.info("IN AuthenticationRestController saveUser - user {} successfully saved", userDto);
+        log.info("IN AuthenticationRestController saveUser - user {} successfully saved", user);
 
-        return new ResponseEntity<>(userService.saveUser(userDto), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
     }
 
     @PostMapping("login")
@@ -59,13 +59,13 @@ public class AuthenticationRestController {
         try {
             String username = requestDto.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
-            UserDto userDto = userService.findByAuthorName(username);
+            User user = userService.findByAuthorName(username);
 
-            if (userDto == null) {
+            if (user == null) {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");
             }
 
-            String token = jwtTokenProvider.createToken(username, userDto.getRoles());
+            String token = jwtTokenProvider.createToken(username, user.getRoles());
 
             Map<Object, Object> response = new HashMap<>();
             response.put("username", username);

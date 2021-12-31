@@ -52,16 +52,16 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(username);
         claims.put("roles", getRoleNames(roles));
 
-//        Date now = new Date();
-//        Date validity = new Date(now.getTime() + validityInMilliseconds);
+        Date now = new Date();
+        Date validity = new Date(now.getTime() + validityInMilliseconds);
 
-        Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());
+//        Date date = Date.from(LocalDate.now().plusDays(15).atStartOfDay(ZoneId.systemDefault()).toInstant());
 
         // creation of token
         return Jwts.builder()//
                 .setClaims(claims)//
-                //.setIssuedAt(now)//
-                .setExpiration(date)//
+                .setIssuedAt(now)//
+                .setExpiration(validity)//
                 .signWith(SignatureAlgorithm.HS256, secret)//
                 .compact();
     }
