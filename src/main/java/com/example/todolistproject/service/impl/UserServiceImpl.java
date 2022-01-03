@@ -31,29 +31,33 @@ public class UserServiceImpl implements UserService {
     private BCryptPasswordEncoder passwordEncoder;
 
     @Override
-    public UserDto saveUser(UserDto userDto) {
+    public User saveUser(User user) {
 
-        User user = UserHistoryMapper.INSTANCE.toUser(userDto);
+        //User user = UserHistoryMapper.INSTANCE.toUser(userDto);
         Role roleUser = roleRepo.findByName("USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
-        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(userRoles);
         userRepo.save(user);
 
         log.info("IN UserServiceImpl saveUser - user {} successfully saved", user);
 
-        return UserHistoryMapper.INSTANCE.toUserDto(user);
+        return user;
+
+        //return UserHistoryMapper.INSTANCE.toUserDto(user);
     }
 
     @Override
-    public UserDto findByLogin(String login) {
+    public User findByLogin(String login) {
 
         User user = userRepo.findByLogin(login);
 
         log.info("IN UserServiceImpl findByLogin - user: {} found by login: {}", user, login);
 
-        return UserHistoryMapper.INSTANCE.toUserDto(user);
+        return user;
+
+        //return UserHistoryMapper.INSTANCE.toUserDto(user);
     }
 
     @Override
