@@ -109,6 +109,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
         http
                 .httpBasic().disable()
                 .cors().and().csrf().disable()
+                .exceptionHandling()
+                //.authenticationEntryPoint(auth)
+                .and()
+                .anonymous().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
@@ -121,7 +125,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider))
                 .and()
-                .formLogin();
+                .formLogin().disable();
     }
 
 }

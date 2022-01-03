@@ -39,6 +39,10 @@ public class JwtUser implements UserDetails {
         return id;
     }
 
+    public String getAuthorName() {
+        return authorName;
+    }
+
     public String getLogin() {
         return login;
     }
@@ -51,7 +55,7 @@ public class JwtUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return authorName;
+        return login;
     }
 
     @JsonIgnore

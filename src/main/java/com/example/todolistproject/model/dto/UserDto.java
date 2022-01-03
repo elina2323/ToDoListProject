@@ -28,9 +28,9 @@ public class UserDto {
     String login;
     @NotBlank
     String password;
-    @CreatedDate
-    LocalDateTime created;
-    @LastModifiedDate
-    LocalDateTime updated;
     List<Role> roles;
+//    @CreatedDate
+//    LocalDateTime created;
+//    @LastModifiedDate
+//    LocalDateTime updated;
 }

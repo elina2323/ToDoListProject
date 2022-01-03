@@ -7,6 +7,8 @@ import com.example.todolistproject.model.dto.AuthenticationRequestDto;
 import com.example.todolistproject.service.UserService;
 //import io.swagger.annotations.ApiOperation;
 //import io.swagger.annotations.Authorization;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Authorization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,12 +57,12 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("login")
-//    @ApiOperation(value = "", authorizations = { @Authorization(value="jwtToken") })
+    @ApiOperation(value = "", authorizations = { @Authorization(value="jwtToken") })
     public ResponseEntity<?> login(@Valid @RequestBody AuthenticationRequestDto requestDto) {
         try {
             String username = requestDto.getUsername();
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
-            UserDto userDto = userService.findByAuthorName(username);
+            UserDto userDto = userService.findByLogin(username);
 
             if (userDto == null) {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");

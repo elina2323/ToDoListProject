@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         Role roleUser = roleRepo.findByName("USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setRoles(userRoles);
         userRepo.save(user);
 
@@ -47,11 +47,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDto findByAuthorName(String authorName) {
+    public UserDto findByLogin(String login) {
 
-        User user = userRepo.findByAuthorName(authorName);
+        User user = userRepo.findByLogin(login);
 
-        log.info("IN UserServiceImpl findByAuthorName - user: {} found by authorName: {}", user, authorName);
+        log.info("IN UserServiceImpl findByLogin - user: {} found by login: {}", user, login);
 
         return UserHistoryMapper.INSTANCE.toUserDto(user);
     }
