@@ -25,6 +25,6 @@ public class UserController {
 
         log.info("IN AdminRestController findByUserName - user {} successfully found", username);
 
-        return new ResponseEntity<>(userService.findByLogin(username), HttpStatus.FOUND);
+        return new ResponseEntity<>(userService.findByUsername(username), HttpStatus.FOUND);
     }
 }

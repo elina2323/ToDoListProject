@@ -28,16 +28,16 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     @Override
     // takes user from DB by login, converts and return jwtUser
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = userRepo.findByLogin(login);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepo.findByUsername(username);
 
         if (user == null) {
-            throw new UsernameNotFoundException("User with login: " + login + " not found");
+            throw new UsernameNotFoundException("User with username: " + username + " not found");
         }
 
         JwtUser jwtUser = JwtUserFactory.create(user);
 
-        log.info("IN JwtUserDetailsServiceImpl loadUserByUsername - user with login: {} successfully loaded", login);
+        log.info("IN JwtUserDetailsServiceImpl loadUserByUsername - user with username: {} successfully loaded", username);
 
         return jwtUser;
     }

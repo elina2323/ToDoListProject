@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface TaskRepo extends JpaRepository<Task, Long> {
 
-    List<Task> findAllByUser_AuthorName(String user_authorName);
+    List<Task> findAllByUser_Name(String user_name);
 
 }

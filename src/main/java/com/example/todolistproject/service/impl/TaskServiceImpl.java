@@ -67,7 +67,7 @@ public class TaskServiceImpl implements TaskService {
 
         log.info("IN TaskServiceImpl getTasksByUser - tasks {} successfully got", user);
 
-        return TaskMapper.INSTANCE.mapToTaskDtoList(taskRepo.findAllByUser_AuthorName(user));
+        return TaskMapper.INSTANCE.mapToTaskDtoList(taskRepo.findAllByUser_Name(user));
     }
 
     @Override

@@ -108,11 +108,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
-                .cors().and().csrf().disable()
-                .exceptionHandling()
+                .csrf().disable()
+                //.exceptionHandling()
                 //.authenticationEntryPoint(auth)
-                .and()
-                .anonymous().disable()
+                //.anonymous().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
@@ -123,9 +122,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
                 .anyRequest().authenticated()
                 .and()
-                .apply(new JwtConfigurer(jwtTokenProvider))
-                .and()
-                .formLogin().disable();
+                .apply(new JwtConfigurer(jwtTokenProvider));
     }
 
 }

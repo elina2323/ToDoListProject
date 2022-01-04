@@ -10,8 +10,8 @@ import java.util.Collection;
 public class JwtUser implements UserDetails {
 
     private final Long id;
-    private final String authorName;
-    private final String login;
+    private final String name;
+    private final String username;
     private final String password;
     private final LocalDateTime created;
     private final LocalDateTime updated;
@@ -19,32 +19,29 @@ public class JwtUser implements UserDetails {
     private final Collection<? extends GrantedAuthority> authorities;
 
     public JwtUser(Long id,
-                   String authorName,
-                   String login,
+                   String name,
+                   String username,
                    String password,
                    LocalDateTime created,
                    LocalDateTime updated,
                    Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
-        this.authorName = authorName;
-        this.login = login;
+        this.name = name;
+        this.username = username;
         this.password = password;
         this.created = created;
         this.updated = updated;
         this.authorities = authorities;
     }
 
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
     @JsonIgnore
     public Long getId() {
         return id;
-    }
-
-    public String getAuthorName() {
-        return authorName;
-    }
-
-    public String getLogin() {
-        return login;
     }
 
     @JsonIgnore
@@ -55,7 +52,7 @@ public class JwtUser implements UserDetails {
 
     @Override
     public String getUsername() {
-        return login;
+        return username;
     }
 
     @JsonIgnore
@@ -67,32 +64,17 @@ public class JwtUser implements UserDetails {
     @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return false;
     }
 
     @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @JsonIgnore
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    @JsonIgnore
-    public LocalDateTime getUpdated() {
-        return updated;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
     }
 }

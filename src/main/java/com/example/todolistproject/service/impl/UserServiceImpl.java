@@ -21,14 +21,16 @@ public class UserServiceImpl implements UserService {
 
     private final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
 
-    @Autowired
     private UserRepo userRepo;
-
-    @Autowired
     private RoleRepo roleRepo;
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    public UserServiceImpl(UserRepo userRepo, RoleRepo roleRepo, BCryptPasswordEncoder passwordEncoder) {
+        this.userRepo = userRepo;
+        this.roleRepo = roleRepo;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @Override
     public User saveUser(User user) {
@@ -39,39 +41,39 @@ public class UserServiceImpl implements UserService {
         userRoles.add(roleUser);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRoles(userRoles);
-        userRepo.save(user);
+        User registeredUser = userRepo.save(user);
 
         log.info("IN UserServiceImpl saveUser - user {} successfully saved", user);
 
+        return registeredUser;
+
+        //return UserHistoryMapper.INSTANCE.toUserDto(user);
+    }
+
+    @Override
+    public User findByUsername(String username) {
+
+        User user = userRepo.findByUsername(username);
+
+        log.info("IN UserServiceImpl findByLogin - user: {} found by login: {}", user, username);
+
         return user;
 
         //return UserHistoryMapper.INSTANCE.toUserDto(user);
     }
 
     @Override
-    public User findByLogin(String login) {
-
-        User user = userRepo.findByLogin(login);
-
-        log.info("IN UserServiceImpl findByLogin - user: {} found by login: {}", user, login);
-
-        return user;
-
-        //return UserHistoryMapper.INSTANCE.toUserDto(user);
-    }
-
-    @Override
-    public List<UserDto> getAllUsers() {
+    public List<User> getAllUsers() {
 
         List<User> userList = userRepo.findAll();
 
         log.info("IN UserServiceImpl getAllUsers - {} users found", userList.size());
 
-        return UserHistoryMapper.INSTANCE.toUserDtoList(userList);
+        return userList;
     }
 
     @Override
-    public UserDto findById(Long id) {
+    public User findById(Long id) {
 
         User user = userRepo.findById(id).orElse(null);
 
@@ -82,7 +84,7 @@ public class UserServiceImpl implements UserService {
 
         log.info("IN UserServiceImpl findById - user: {} found by id: {}", user, id);
 
-        return UserHistoryMapper.INSTANCE.toUserDto(user);
+        return user;
     }
 
     @Override

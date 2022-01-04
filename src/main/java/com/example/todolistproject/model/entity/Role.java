@@ -5,8 +5,11 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
 
@@ -23,7 +26,26 @@ public class Role {
     @Column(nullable = false, length = 45)
     String name;
 
+    @CreatedDate
+    @Column(name = "created_date")
+    LocalDateTime created;
+
+    @LastModifiedDate
+    @Column(name = "updated_date")
+    LocalDateTime updated;
+
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private List<User> users;
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", created=" + created +
+                ", updated=" + updated +
+                ", users=" + users +
+                '}';
+    }
 }
 

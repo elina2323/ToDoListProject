@@ -29,7 +29,7 @@ public class JwtTokenProvider {
     private String secret;
 
     @Value("${jwt.token.expired}")
-    private long validityInMilliseconds;
+    private long validityInMilliseconds; // 1h
 
     @Qualifier("jwtUserDetailsService")
 

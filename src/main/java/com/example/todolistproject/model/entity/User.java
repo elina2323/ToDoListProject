@@ -24,9 +24,9 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @Column(name = "author_name", nullable = false)
-    String authorName;
+    String name;
     @Column(name = "login", nullable = false)
-    String login;
+    String username;
     @Column(name = "password", nullable = false)
     String password;
 

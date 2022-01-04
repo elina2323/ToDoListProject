@@ -23,12 +23,12 @@ public class UserDto {
 
     Long id;
     @NotBlank
-    String authorName;
+    String name;
     @NotBlank
-    String login;
-    @NotBlank
-    String password;
-    List<Role> roles;
+    String username;
+//    @NotBlank
+//    String password;
+//    List<Role> roles;
 //    @CreatedDate
 //    LocalDateTime created;
 //    @LastModifiedDate
