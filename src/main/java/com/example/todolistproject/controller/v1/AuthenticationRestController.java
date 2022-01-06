@@ -19,10 +19,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.HashMap;
@@ -30,7 +27,7 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/api/v1/auth/")
-//@CrossOrigin
+@CrossOrigin
 public class AuthenticationRestController {
 
     private final Logger log = LoggerFactory.getLogger(UserController.class);
@@ -49,11 +46,11 @@ public class AuthenticationRestController {
     }
 
     @PostMapping("sign_up")
-    public ResponseEntity<?> saveUser(@Valid @RequestBody User user) {
+    public ResponseEntity<?> saveUser(@Valid @RequestBody UserDto userDto) {
 
-        log.info("IN AuthenticationRestController saveUser - user {} successfully saved", user);
+        log.info("IN AuthenticationRestController saveUser - user {} successfully saved", userDto);
 
-        return new ResponseEntity<>(userService.saveUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(userService.saveUser(userDto), HttpStatus.CREATED);
     }
 
     @PostMapping("login")

@@ -45,8 +45,10 @@ public class SpringFoxConfig implements WebMvcConfigurer {
                  .build();
      }
 
+    public static final String AUTHORIZATION_HEADER = "Authorization";
+
      private ApiKey apiKey() {
-         return new ApiKey("jwtToken", "Authorization", "header");
+         return new ApiKey("JWT", AUTHORIZATION_HEADER, "header");
      }
 
 //   @Override

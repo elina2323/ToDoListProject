@@ -26,8 +26,8 @@ public class UserDto {
     String name;
     @NotBlank
     String username;
-//    @NotBlank
-//    String password;
+    @NotBlank
+    String password;
 //    List<Role> roles;
 //    @CreatedDate
 //    LocalDateTime created;

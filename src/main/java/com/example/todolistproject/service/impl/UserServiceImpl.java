@@ -33,13 +33,16 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User saveUser(User user) {
+    public User saveUser(UserDto userDto) {
 
         //User user = UserHistoryMapper.INSTANCE.toUser(userDto);
+        User user = new User();
         Role roleUser = roleRepo.findByName("USER");
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(roleUser);
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setName(userDto.getName());
+        user.setUsername(userDto.getUsername());
+        user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setRoles(userRoles);
         User registeredUser = userRepo.save(user);
 

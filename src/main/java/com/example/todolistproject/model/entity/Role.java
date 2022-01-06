@@ -26,14 +26,6 @@ public class Role {
     @Column(nullable = false, length = 45)
     String name;
 
-    @CreatedDate
-    @Column(name = "created_date")
-    LocalDateTime created;
-
-    @LastModifiedDate
-    @Column(name = "updated_date")
-    LocalDateTime updated;
-
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private List<User> users;
 
@@ -42,8 +34,6 @@ public class Role {
         return "Role{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", created=" + created +
-                ", updated=" + updated +
                 ", users=" + users +
                 '}';
     }

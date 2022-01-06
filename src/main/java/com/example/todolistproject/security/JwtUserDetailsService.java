@@ -20,16 +20,16 @@ public class JwtUserDetailsService implements UserDetailsService {
 
     private final Logger log = LoggerFactory.getLogger(JwtUserDetailsService.class);
 
-    private final UserRepo userRepo;
+    private final UserService userService;
 
-    public JwtUserDetailsService(UserRepo userRepo) {
-        this.userRepo = userRepo;
+    public JwtUserDetailsService(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
     // takes user from DB by login, converts and return jwtUser
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findByUsername(username);
+        User user = userService.findByUsername(username);
 
         if (user == null) {
             throw new UsernameNotFoundException("User with username: " + username + " not found");

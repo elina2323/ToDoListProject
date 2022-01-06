@@ -1,5 +1,6 @@
 package com.example.todolistproject.config;
 
+import com.example.todolistproject.security.jwt.JwtAuthenticationEntryPoint;
 import com.example.todolistproject.security.jwt.JwtConfigurer;
 import com.example.todolistproject.security.jwt.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     @Autowired
     private  JwtTokenProvider jwtTokenProvider;
 
-    private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
+    @Autowired
+    private JwtAuthenticationEntryPoint authenticationEntryPoint;
+
+    private static final String ADMIN_ENDPOINT = "/api/v1/admin/users/**";
     private static final String LOGIN_ENDPOINT = "/api/v1/auth/**";
     private static final String TASK_ENDPOINT = "/api/v1/tasks/**";
        private static final String[] AUTH_WHITELIST = {
@@ -91,13 +95,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
 //                .roles("ADMIN", "SWAGGER");
 //    }
 
-    @Bean
-    public DaoAuthenticationProvider daoAuthenticationProvider() {
-        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-        authProvider.setUserDetailsService(userDetailsService());
-        authProvider.setPasswordEncoder(new BCryptPasswordEncoder());
-        return authProvider;
-    }
+//    @Bean
+//    public DaoAuthenticationProvider daoAuthenticationProvider() {
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//        authProvider.setUserDetailsService(userDetailsService());
+//        authProvider.setPasswordEncoder(new BCryptPasswordEncoder());
+//        return authProvider;
+//    }
 
     @Bean
     GrantedAuthorityDefaults grantedAuthorityDefaults() {
@@ -109,14 +113,21 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
         http
                 .httpBasic().disable()
                 .csrf().disable()
-                //.exceptionHandling()
-                //.authenticationEntryPoint(auth)
+                .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
                 //.anonymous().disable()
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(AUTH_WHITELIST).permitAll()
-                .antMatchers(LOGIN_ENDPOINT).permitAll()
+                //.antMatchers(AUTH_WHITELIST).permitAll()
+                //.antMatchers(LOGIN_ENDPOINT).permitAll()
+                .antMatchers("/").permitAll()
+                .antMatchers("/api/v1/auth/**").permitAll()
+                .antMatchers("/v2/api-docs/**").permitAll()
+                .antMatchers("/swagger-ui/**").permitAll()
+                .antMatchers("/swagger-resources/**").permitAll()
+                .antMatchers("/swagger-ui.html").permitAll()
+                .antMatchers("/webjars/**").permitAll()
                 .antMatchers("/api/v1/users/get-by-name").hasAnyRole("ADMIN", "USER")
                 //.antMatchers(TASK_ENDPOINT).hasAnyRole("ADMIN", "USER")
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")

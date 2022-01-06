@@ -14,7 +14,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api/v1/admin/")
-//@CrossOrigin
+@CrossOrigin
 public class AdminRestController {
 
     private final Logger log = LoggerFactory.getLogger(UserController.class);
@@ -27,7 +27,7 @@ public class AdminRestController {
     }
 
     @GetMapping(value = "users/{id}")
-    public ResponseEntity<?> getUserById(@PathVariable(name = "id") Long id) {
+    public ResponseEntity<UserDto> getUserById(@PathVariable(name = "id") Long id) {
         User user = userService.findById(id);
 
         if (user == null) {
@@ -53,7 +53,7 @@ public class AdminRestController {
 //    }
 
     @GetMapping(value = "users/delete{id}")
-    public ResponseEntity<?> deleteById(@PathVariable(name = "id") Long id){
+    public ResponseEntity<UserDto> deleteById(@PathVariable(name = "id") Long id){
         userService.delete(id);
 
         log.info("IN AdminRestController deleteById - user {} successfully deleted", id);

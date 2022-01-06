@@ -1,5 +1,6 @@
 package com.example.todolistproject.security.jwt;
 
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -30,7 +31,7 @@ public class JwtTokenFilter extends GenericFilterBean {
             //to be checked on access rights
             Authentication auth = jwtTokenProvider.getAuthentication(token);
 
-            if (auth != null) {
+            if (auth != null && !(auth instanceof AnonymousAuthenticationToken)) {
                 SecurityContextHolder.getContext().setAuthentication(auth);
             }
         }

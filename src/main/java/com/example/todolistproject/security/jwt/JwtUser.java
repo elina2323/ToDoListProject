@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 
 public class JwtUser implements UserDetails {
 
@@ -13,8 +14,7 @@ public class JwtUser implements UserDetails {
     private final String name;
     private final String username;
     private final String password;
-    private final LocalDateTime created;
-    private final LocalDateTime updated;
+    private final LocalDateTime lastPasswordResetDate;
     // interface for user's accesses
     private final Collection<? extends GrantedAuthority> authorities;
 
@@ -22,15 +22,13 @@ public class JwtUser implements UserDetails {
                    String name,
                    String username,
                    String password,
-                   LocalDateTime created,
-                   LocalDateTime updated,
+                   LocalDateTime lastPasswordResetDate,
                    Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.name = name;
         this.username = username;
         this.password = password;
-        this.created = created;
-        this.updated = updated;
+        this.lastPasswordResetDate = lastPasswordResetDate;
         this.authorities = authorities;
     }
 
@@ -44,15 +42,24 @@ public class JwtUser implements UserDetails {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String getUsername() {
+        return username;
+    }
+
     @JsonIgnore
     @Override
     public String getPassword() {
         return password;
     }
 
-    @Override
-    public String getUsername() {
-        return username;
+    @JsonIgnore
+    public LocalDateTime getLastPasswordResetDate() {
+        return lastPasswordResetDate;
     }
 
     @JsonIgnore
