@@ -108,11 +108,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
         return new GrantedAuthorityDefaults(""); // Remove the ROLE_ prefix
     }
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/v2/api-docs",
+                "/configuration/ui",
+                "/swagger-resources/**",
+                "/configuration/**",
+                "/swagger-ui.html",
+                "/webjars/**",
+                "/csrf",
+                "/");
+
+    }
+
      @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .httpBasic().disable()
-                .csrf().disable()
+                .csrf().ignoringAntMatchers("/api/v1/**")
+                .and()
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint)
                 //.anonymous().disable()
                 .and()
@@ -122,7 +136,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 //.antMatchers(AUTH_WHITELIST).permitAll()
                 //.antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers("/").permitAll()
-                .antMatchers("/api/v1/auth/**").permitAll()
+                .antMatchers("/api/v1/auth/sign_up", "/api/v1/auth/login").permitAll()
                 .antMatchers("/v2/api-docs/**").permitAll()
                 .antMatchers("/swagger-ui/**").permitAll()
                 .antMatchers("/swagger-resources/**").permitAll()
@@ -131,7 +145,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
                 .antMatchers("/api/v1/users/get-by-name").hasAnyRole("ADMIN", "USER")
                 //.antMatchers(TASK_ENDPOINT).hasAnyRole("ADMIN", "USER")
                 .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .anyRequest().permitAll()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenProvider));
     }

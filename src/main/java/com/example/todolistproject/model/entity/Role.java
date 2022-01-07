@@ -1,5 +1,6 @@
 package com.example.todolistproject.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
@@ -26,16 +27,15 @@ public class Role {
     @Column(nullable = false, length = 45)
     String name;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
-    private List<User> users;
+    List<User> users;
 
     @Override
     public String toString() {
         return "Role{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", users=" + users +
-                '}';
+                "id: " + id + ", " +
+                "name: " + name + "}";
     }
 }
 

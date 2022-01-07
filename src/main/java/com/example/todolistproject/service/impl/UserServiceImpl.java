@@ -37,12 +37,13 @@ public class UserServiceImpl implements UserService {
 
         //User user = UserHistoryMapper.INSTANCE.toUser(userDto);
         User user = new User();
-        Role roleUser = roleRepo.findByName("USER");
-        List<Role> userRoles = new ArrayList<>();
-        userRoles.add(roleUser);
+
         user.setName(userDto.getName());
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        Role roleUser = roleRepo.findByName("USER");
+        List<Role> userRoles = new ArrayList<>();
+        userRoles.add(roleUser);
         user.setRoles(userRoles);
         User registeredUser = userRepo.save(user);
 
@@ -58,7 +59,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepo.findByUsername(username);
 
-        log.info("IN UserServiceImpl findByLogin - user: {} found by login: {}", user, username);
+        log.info("IN UserServiceImpl findByUsername - user: {} found by username: {}", user, username);
 
         return user;
 
