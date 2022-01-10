@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -36,9 +38,9 @@ public class Task {
     @Column(name = "status")
     Status status;
 
-    @CreatedDate
+    @CreationTimestamp
     LocalDateTime created;
-    @LastModifiedDate
+    @UpdateTimestamp
     LocalDateTime updated;
 
     @ManyToOne

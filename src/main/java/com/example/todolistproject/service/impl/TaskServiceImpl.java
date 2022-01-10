@@ -5,11 +5,13 @@ import com.example.todolistproject.exception.ResourceNotFoundException;
 import com.example.todolistproject.mapper.TaskMapper;
 import com.example.todolistproject.model.dto.StatusHistoryDto;
 import com.example.todolistproject.model.dto.TaskDto;
-import com.example.todolistproject.model.entity.StatusHistory;
+import com.example.todolistproject.model.dto.UserDto;
 import com.example.todolistproject.model.entity.Task;
+import com.example.todolistproject.model.entity.User;
 import com.example.todolistproject.model.enums.Status;
 import com.example.todolistproject.service.StatusHistoryService;
 import com.example.todolistproject.service.TaskService;
+import com.example.todolistproject.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +31,18 @@ public class TaskServiceImpl implements TaskService {
     private TaskRepo taskRepo;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private StatusHistoryService statusHistoryService;
 
     @Override
     public TaskDto saveTask(TaskDto taskDto) {
 
+        User user = userService.findByUsername(taskDto.getUserName());
         Task task = TaskMapper.INSTANCE.mapToTask(taskDto);
-        task.setStatus(Status.NEW);
-        task = taskRepo.save(task);
+        task.setUser(user);
+        task = taskRepo.saveAndFlush(task);
         StatusHistoryDto statusHistoryDto = new StatusHistoryDto();
         statusHistoryDto.setTask(new TaskDto(task.getId()));
         statusHistoryDto.setStatus(Status.NEW);

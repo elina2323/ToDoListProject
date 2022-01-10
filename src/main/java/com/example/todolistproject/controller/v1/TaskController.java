@@ -25,7 +25,7 @@ public class TaskController {
     }
 
     @PostMapping("add")
-    public ResponseEntity<?> addTask(TaskDto taskDto) {
+    public ResponseEntity<?> addTask(@RequestBody TaskDto taskDto) {
 
         log.info("IN TaskController addTask - task {} successfully added", taskDto);
 
@@ -33,7 +33,7 @@ public class TaskController {
     }
 
     @PostMapping("update")
-    public ResponseEntity<?> updateTask(TaskDto taskDto) {
+    public ResponseEntity<?> updateTask(@RequestBody TaskDto taskDto) {
 
         log.info("IN TaskController updateTodo{}", taskDto);
 
@@ -41,7 +41,7 @@ public class TaskController {
     }
 
     @GetMapping("get-tasks")
-    public ResponseEntity<List<?>> getAllTasks(String user) {
+    public ResponseEntity<List<?>> getAllTasks(@RequestParam  String user) {
 
         log.info("IN TaskController getAllTasks - tasks successfully got");
 

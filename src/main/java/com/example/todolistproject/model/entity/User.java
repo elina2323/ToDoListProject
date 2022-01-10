@@ -52,5 +52,7 @@ public class User {
 
     List<Role> roles;
 
-
+    public User(Long id) {
+        this.id = id;
+    }
 }

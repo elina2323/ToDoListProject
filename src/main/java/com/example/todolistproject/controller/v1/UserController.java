@@ -21,7 +21,7 @@ public class UserController {
     }
 
     @GetMapping("get-by-name")
-    public ResponseEntity<?> findByUserName(String username) {
+    public ResponseEntity<?> findByUserName(@RequestParam String username) {
 
         log.info("IN AdminRestController findByUserName - user {} successfully found", username);
 

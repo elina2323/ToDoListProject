@@ -2,6 +2,7 @@ package com.example.todolistproject.service.impl;
 
 import com.example.todolistproject.dao.RoleRepo;
 import com.example.todolistproject.dao.UserRepo;
+import com.example.todolistproject.exception.ResourceNotFoundException;
 import com.example.todolistproject.mapper.UserHistoryMapper;
 import com.example.todolistproject.model.dto.UserDto;
 import com.example.todolistproject.model.entity.Role;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -36,7 +38,13 @@ public class UserServiceImpl implements UserService {
     public User saveUser(UserDto userDto) {
 
         //User user = UserHistoryMapper.INSTANCE.toUser(userDto);
-        User user = new User();
+
+        User user = userRepo.findByUsername(userDto.getUsername());
+        if (Objects.nonNull(user)){
+            log.info("IN UserServiceImpl saveUser - user already exist: {}", userDto.getUsername());
+            throw new ResourceNotFoundException("User with username:"+userDto.getUsername()+"\talready exist");
+        }
+        user = new User();
 
         user.setName(userDto.getName());
         user.setUsername(userDto.getUsername());
