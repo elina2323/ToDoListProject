@@ -1,11 +1,13 @@
 package com.example.todolistproject.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -28,15 +30,15 @@ public class User {
     Long id;
     @Column(name = "author_name", nullable = false)
     String name;
-    @Column(name = "login", nullable = false)
+    @Column(name = "username", nullable = false)
     String username;
     @Column(name = "password", nullable = false)
     String password;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "created_date")
     LocalDateTime created;
-    @LastModifiedDate
+    @UpdateTimestamp
     @Column(name = "updated_date")
     LocalDateTime updated;
 

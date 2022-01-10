@@ -86,22 +86,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter implements W
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-//     @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//        auth.inMemoryAuthentication()
-//                .withUser("admin")
-//                .password(passwordEncoder.encode("admin2323"))
-//                .roles("ADMIN", "SWAGGER");
-//    }
 
-//    @Bean
-//    public DaoAuthenticationProvider daoAuthenticationProvider() {
-//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
-//        authProvider.setUserDetailsService(userDetailsService());
-//        authProvider.setPasswordEncoder(new BCryptPasswordEncoder());
-//        return authProvider;
-//    }
 
     @Bean
     GrantedAuthorityDefaults grantedAuthorityDefaults() {
